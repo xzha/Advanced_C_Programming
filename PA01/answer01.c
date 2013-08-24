@@ -45,7 +45,14 @@
 */
 int addElement(int * array, int length)
 {
-    return 0;
+  int sum = 0;
+  int counter;
+
+  for (counter = 0; counter < length; counter + 2)
+    {
+      sum += array[counter] + array[counter + 1];
+    }
+    return sum;
 }
 /*
  * =================================================================
@@ -71,7 +78,7 @@ int addElement(int * array, int length)
 */
 int countNegative(int * array, int length)
 {
-    return 0;
+  return 0;
 }
 /*
  * =================================================================
@@ -119,5 +126,5 @@ int countNegative(int * array, int length)
 */
 int isIncreasing(int * array, int length)
 {
-    return 0;
+  return 0;
 }
