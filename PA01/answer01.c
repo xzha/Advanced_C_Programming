@@ -45,12 +45,12 @@
 */
 int addElement(int * array, int length)
 {
-  int sum = 0;
-  int i;
+  int sum = 0; /* The sum of all the elements in the array */
+  int i; /* loop control variable */
 
-  for (i = 0; i < length; i += 2)
+  for (i = 0; i < length; i += 2) 
     {
-      sum += array[i] + array[i + 1];
+      sum += array[i] + array[i + 1]; /* add the current value with the next value */
     }
     return sum;
 }
@@ -78,14 +78,14 @@ int addElement(int * array, int length)
 */
 int countNegative(int * array, int length)
 {
-  int negative = 0;
-  int i;
+  int negative = 0; /* the number of negative numbers */
+  int i; /* loop control variable */
 
   for (i = 0; i < length; i++)
     {
-      if (array[i] < 0)
+      if (array[i] < 0) /* if the number is less than 0 */
 	{
-	  negative++;
+	  negative++; /* add negative by one */
 	}
     }
 
@@ -137,19 +137,21 @@ int countNegative(int * array, int length)
 */
 int isIncreasing(int * array, int length)
 {
-  int test;
-  int i;
+  int test = 1; /* test the arrangement of the array: 1 means it's increasing, 0 means it's not */
+  int i; /* loop control variable */
 
-  for (i = 0; i < length; i += 2)
+  for (i = 0; i < length - 1; i++)
     {
-      if (array[i] < array[i + 1])
+      if (array[i] > array[i + 1]) /* if the current value is bigger than the next one */
 	{
-	  test = 0;
-	}
-      else
-	{
-	  test = 1;
+	  test = 0; /* the array is not increasing */
 	}
     }
+
+  if (length == 0 || length == 1)
+    {
+      test = 1;
+    }
+
   return test;
 }
