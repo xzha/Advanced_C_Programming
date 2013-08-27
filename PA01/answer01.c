@@ -48,11 +48,11 @@ int addElement(int * array, int length)
   int sum = 0; /* The sum of all the elements in the array */
   int i; /* loop control variable */
 
-  for (i = 0; i < length; i += 2) 
+  for (i = 0; i < length; i++) 
     {
-      sum += array[i] + array[i + 1]; /* add the current value with the next value */
+      sum += array[i]; /* add the current value with the next value */
     }
-    return sum;
+  return sum;
 }
 /*
  * =================================================================
