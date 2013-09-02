@@ -51,6 +51,16 @@ int my_countchar(const char * s, char c)
  */
 void my_strupper(char * s)
 {
+  int i = 0;
+
+  while (s[i] != '\0')
+    {
+      if (s[i] >= 'a' && s[i] <= 'z')
+	{
+	  s[i] -= 32;
+	}
+      i++;
+    }
 
 }
 
@@ -65,7 +75,16 @@ void my_strupper(char * s)
  */
 void my_strlower(char * s)
 {
+  int i = 0;
 
+  while (s[i] != '\0')
+    {
+      if (s[i] >= 'A' && s[i] <= 'Z')
+	{
+	  s[i] += 32;
+	}
+      i++;
+    }
 }
 
 /**
@@ -80,7 +99,12 @@ void my_strlower(char * s)
  */
 void my_strcpy(char * s1, const char * s2)
 {
-
+  int i = 0;
+  
+  for (i = 0; i < (my_strlen(s2) + 1); i++)
+    {
+      s1[i] = s2[i];
+    }
 }
 
 /**
@@ -95,7 +119,20 @@ void my_strcpy(char * s1, const char * s2)
  */
 void my_strncpy(char * s1, const char * s2, int num)
 {
-    
+  int i = 0;
+
+  for (i = 0; i < my_strlen(s2) + 1; i++)
+    {
+      if (i < num)
+	{
+	  s1[i] = s2[i];
+	}
+      else
+	{
+	  s1[i] = '\0';
+	}
+    }
+
 }
 
 
@@ -110,7 +147,14 @@ void my_strncpy(char * s1, const char * s2, int num)
  */
 void my_strcat(char * s1, const char * s2) 
 {
-    
+  int i;
+  int j = 0;
+
+  for (i = my_strlen(s1); i < (2 * my_strlen(s1)) + 1; i++)
+    {
+      s1[i] = s2[j];
+      j++;
+    }
 }
 
 /** 
@@ -210,6 +254,5 @@ void my_strinsert(char *s1, const char *s2, int pos)
  */
 void my_strdelete(char *s, int pos, int length)
 {
-  
+ 
 }
-
