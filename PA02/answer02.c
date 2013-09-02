@@ -238,16 +238,15 @@ const char *my_strstr(const char * s1, const char * s2)
 void my_strinsert(char *s1, const char *s2, int pos)
 {
   int i;
-  int j;
   
-  for (i = my_strlen(s2) + my_strlen(s1) - 1; i > pos; i--)
+  for (i = my_strlen(s1); i >= pos; i--)
     {
-      s1[i] = s1[pos + i];
+      s1[i + my_strlen(s2)] = s1[i];
     }
-
-   for (j = 0; j < my_strlen(s2) - 1; j++)
+  
+   for (i = 0; i < my_strlen(s2); i++)
     {
-      s1[pos + j] = s2[j];
+      s1[pos + i] = s2[i];
     }
 }
 
@@ -286,5 +285,16 @@ void my_strinsert(char *s1, const char *s2, int pos)
  */
 void my_strdelete(char *s, int pos, int length)
 {
+  int i;
+  int j = 0;
 
+  for (i = 0 ; i <= (my_strlen(s) + 1 - pos - length); i++)
+    {
+      s[pos + i] = s[pos + length + i];
+    }
+
+  if ((pos + length) >= my_strlen(s))
+    {
+      s[j] = '\0';
+    }
 }
