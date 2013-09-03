@@ -12,7 +12,7 @@ int my_strlen(const char * s)
   
   while (s[i] != '\0')
     {
-      i++;
+      i++; /* count the number of elements in string */
     }
     return i;
 }
@@ -32,7 +32,7 @@ int my_countchar(const char * s, char c)
     {
       if (s[i] == c)
 	{
-	  count++;
+	  count++; /* count the number of unique elements in string */
 	}
       i++;
     }
@@ -55,9 +55,9 @@ void my_strupper(char * s)
 
   while (s[i] != '\0')
     {
-      if (s[i] >= 'a' && s[i] <= 'z')
+      if (s[i] >= 'a' && s[i] <= 'z') /* only values between a and z */
 	{
-	  s[i] -= 32;
+	  s[i] -= 32; /* subtract 32 to make it upper case */
 	}
       i++;
     }
@@ -79,9 +79,9 @@ void my_strlower(char * s)
 
   while (s[i] != '\0')
     {
-      if (s[i] >= 'A' && s[i] <= 'Z')
+      if (s[i] >= 'A' && s[i] <= 'Z') /* only values between A and Z */
 	{
-	  s[i] += 32;
+	  s[i] += 32; /* add 32 to make it lower case */
 	}
       i++;
     }
@@ -103,7 +103,7 @@ void my_strcpy(char * s1, const char * s2)
   
   for (i = 0; i < (my_strlen(s2) + 1); i++)
     {
-      s1[i] = s2[i];
+      s1[i] = s2[i]; /* copy the string */
     }
 }
 
@@ -125,11 +125,11 @@ void my_strncpy(char * s1, const char * s2, int num)
     {
       if (i < num)
 	{
-	  s1[i] = s2[i];
+	  s1[i] = s2[i]; /* copy the string */
 	}
       else
 	{
-	  s1[i] = '\0';
+	  s1[i] = '\0'; /* terminate the string after num */
 	}
     }
 
@@ -150,9 +150,9 @@ void my_strcat(char * s1, const char * s2)
   int i;
   int j = 0;
 
-  for (i = my_strlen(s1); i < (2 * my_strlen(s1)) + 1; i++)
+  for (i = my_strlen(s1); i < (my_strlen(s1) + my_strlen(s2)) + 1; i++)
     {
-      s1[i] = s2[j];
+      s1[i] = s2[j]; /* add second string behind the first string */
       j++;
     }
 }
@@ -171,12 +171,12 @@ void my_strncat(char * s1, const char * s2, int num)
   int i;
   int j = 0;
 
-  for (i = my_strlen(s1); i < (2 * my_strlen(s1)) + 1; i++)
+  for (i = my_strlen(s1); i < (my_strlen(s2) + my_strlen(s1)) + 1; i++)
     {
-      s1[i] = s2[j];
+      s1[i] = s2[j]; /* copy the string */
       if (j >= num)
 	{
-	  s1[i] = '\0';
+	  s1[i] = '\0'; /* terminate when second string hit num */
 	}
       j++;
     }
@@ -196,15 +196,17 @@ const char *my_strstr(const char * s1, const char * s2)
 {
   int i;
   int j = 0;
+  const char * k = NULL;
 
   for (i = 0; i < my_strlen(s1) + 1; i++)
     {
-      while (s1[j + i] == s2[j + i])
+      while (s1[j + i] == s2[j + i]) /* compare the two strings */
 	{
-	  j++;
+	  j++; /* if match return pointer */
 	}
+      k = &s1[j];
     }
-    return j;
+    return j; 
 }
 
 
@@ -241,12 +243,12 @@ void my_strinsert(char *s1, const char *s2, int pos)
   
   for (i = my_strlen(s1); i >= pos; i--)
     {
-      s1[i + my_strlen(s2)] = s1[i];
+      s1[i + my_strlen(s2)] = s1[i]; /* move elements to designated position */
     }
   
    for (i = 0; i < my_strlen(s2); i++)
     {
-      s1[pos + i] = s2[i];
+      s1[pos + i] = s2[i]; /* fill in the gap */
     }
 }
 
@@ -290,11 +292,11 @@ void my_strdelete(char *s, int pos, int length)
 
   for (i = 0 ; i <= (my_strlen(s) + 1 - pos - length); i++)
     {
-      s[pos + i] = s[pos + length + i];
+      s[pos + i] = s[pos + length + i]; /* delete the selected portion by moving elements into it */
     }
 
-  if ((pos + length) >= my_strlen(s))
+  if (((pos + length) >= my_strlen(s)) && pos == 0)
     {
-      s[j] = '\0';
+      s[j] = '\0'; /* terminate string if the whole string is selected */
     }
 }
