@@ -241,14 +241,20 @@ void my_strinsert(char *s1, const char *s2, int pos)
 {
   int i;
   
-  for (i = my_strlen(s1); i >= pos; i--)
+  if (pos > (my_strlen(s1) + my_strlen(s2)))
     {
-      s1[i + my_strlen(s2)] = s1[i]; /* move elements to designated position */
+      my_strcat(s2, s1);
     }
-  
-   for (i = 0; i < my_strlen(s2); i++)
+  else
     {
-      s1[pos + i] = s2[i]; /* fill in the gap */
+      for (i = my_strlen(s1); i >= pos; i--)
+	{
+	  s1[i + my_strlen(s2)] = s1[i]; /* move elements to designated position */
+	}
+      for (i = 0; i < my_strlen(s2); i++)
+	{
+	  s1[pos + i] = s2[i]; /* fill in the gap */
+	}
     }
 }
 
