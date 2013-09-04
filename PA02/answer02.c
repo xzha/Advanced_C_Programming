@@ -196,20 +196,20 @@ const char *my_strstr(const char * s1, const char * s2)
 {
   int i;
   int j = 0;
-  const char * k = NULL;
 
   for (i = 0; i < my_strlen(s1) + 1; i++)
     {
       while (s1[j + i] == s2[j + i]) /* compare the two strings */
 	{
-	  j++; /* if match return pointer */
+	  j++;
+	  if ( j == my_strlen(s2)) /* if s2 is in s1 */
+	    {
+	      return s1 + i; /* return pointer */
+	    }
 	}
-      k = &s1[j];
     }
-    return j; 
+  return NULL;
 }
-
-
 
 /**
  * Insert a null-terminated string s2 in the null-terminated string s1
@@ -243,18 +243,15 @@ void my_strinsert(char *s1, const char *s2, int pos)
   
   if (pos > (my_strlen(s1) + my_strlen(s2)))
     {
-      my_strcat(s2, s1);
+      pos = my_strlen(s1);
     }
-  else
+  for (i = my_strlen(s1); i >= pos; i--)
     {
-      for (i = my_strlen(s1); i >= pos; i--)
-	{
-	  s1[i + my_strlen(s2)] = s1[i]; /* move elements to designated position */
-	}
-      for (i = 0; i < my_strlen(s2); i++)
-	{
-	  s1[pos + i] = s2[i]; /* fill in the gap */
-	}
+      s1[i + my_strlen(s2)] = s1[i]; /* move elements to designated position */
+    }
+  for (i = 0; i < my_strlen(s2); i++)
+    {
+      s1[pos + i] = s2[i]; /* fill in the gap */
     }
 }
 
