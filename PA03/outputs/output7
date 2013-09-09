@@ -1,0 +1,4 @@
+Unsorted array:  95  91  10  34  28  14  96  70  76  64  52  24  86  49  33  53  94  79  68  18  45  74  21
+Sorted array:    95  91  10  34  28  14  96  70  76  64  52  24  86  49  33  53  94  79  68  18  45  74  21 -- FAIL (not sorted).
+Integer '95' not found -- FAIL.
+Integer '96' not found -- FAIL.
