@@ -1,0 +1,89 @@
+==3909== Memcheck, a memory error detector
+==3909== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==3909== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==3909== Command: ./pa02 inputs/input4
+==3909== Parent PID: 3900
+==3909== 
+--3909-- 
+--3909-- Valgrind options:
+--3909--    --suppressions=/usr/lib/valgrind/debian-libc6-dbg.supp
+--3909--    --tool=memcheck
+--3909--    --leak-check=full
+--3909--    --verbose
+--3909--    --log-file=outputs/valgrind-log54
+--3909-- Contents of /proc/version:
+--3909--   Linux version 3.8.0-29-generic (buildd@roseapple) (gcc version 4.7.3 (Ubuntu/Linaro 4.7.3-1ubuntu1) ) #42-Ubuntu SMP Tue Aug 13 19:40:39 UTC 2013
+--3909-- Arch and hwcaps: AMD64, amd64-sse3-cx16-avx
+--3909-- Page sizes: currently 4096, max supported 4096
+--3909-- Valgrind library directory: /usr/lib/valgrind
+--3909-- Reading syms from /home/yaoyao/ECE264/solutions/PA02/pa02
+--3909-- Reading syms from /lib/x86_64-linux-gnu/ld-2.17.so
+--3909--   Considering /lib/x86_64-linux-gnu/ld-2.17.so ..
+--3909--   .. CRC mismatch (computed 0e805c9a wanted d5b108bd)
+--3909--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--3909--   .. CRC is valid
+--3909--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--3909--   .. CRC is valid
+--3909-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--3909--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--3909--   .. CRC mismatch (computed 8dadd6e3 wanted 096f8488)
+--3909--    object doesn't have a symbol table
+--3909--    object doesn't have a dynamic symbol table
+--3909-- Scheduler: using generic scheduler lock implementation.
+--3909-- Reading suppressions file: /usr/lib/valgrind/debian-libc6-dbg.supp
+--3909-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==3909== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-3909-by-yaoyao-on-???
+==3909== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-3909-by-yaoyao-on-???
+==3909== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-3909-by-yaoyao-on-???
+==3909== 
+==3909== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==3909== don't want to do, unless you know exactly what you're doing,
+==3909== or are doing some strange experiment):
+==3909==   /usr/lib/valgrind/../../bin/vgdb --pid=3909 ...command...
+==3909== 
+==3909== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==3909==   /path/to/gdb ./pa02
+==3909== and then give GDB the following command
+==3909==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=3909
+==3909== --pid is optional if only one valgrind process is running
+==3909== 
+--3909-- REDIR: 0x4018f40 (strlen) redirected to 0x3806c7e1 (???)
+--3909-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--3909--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--3909--   .. CRC mismatch (computed 7ae7d82a wanted 34ea3d89)
+--3909--    object doesn't have a symbol table
+--3909-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--3909--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--3909--   .. CRC mismatch (computed 272279e5 wanted bc83f658)
+--3909--    object doesn't have a symbol table
+--3909-- REDIR: 0x4018db0 (index) redirected to 0x4c2d440 (index)
+--3909-- REDIR: 0x4018e30 (strcmp) redirected to 0x4c2e480 (strcmp)
+--3909-- Reading syms from /lib/x86_64-linux-gnu/libc-2.17.so
+--3909--   Considering /lib/x86_64-linux-gnu/libc-2.17.so ..
+--3909--   .. CRC mismatch (computed 7a0d6b10 wanted 5a2fe04b)
+--3909--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--3909--   .. CRC is valid
+--3909--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--3909--   .. CRC is valid
+--3909-- REDIR: 0x4ec1990 (strcasecmp) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--3909-- REDIR: 0x4ebdd20 (strnlen) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--3909-- REDIR: 0x4ec3c60 (strncasecmp) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--3909-- REDIR: 0x4ec07a0 (memset) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--3909-- REDIR: 0x4ec0750 (memcpy@GLIBC_2.2.5) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--3909-- REDIR: 0x4ebf710 (__GI_strrchr) redirected to 0x4c2d260 (__GI_strrchr)
+--3909-- REDIR: 0x4ebc100 (strcmp) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--3909-- REDIR: 0x4f6cbd0 (__strcmp_sse42) redirected to 0x4c2e3e0 (strcmp)
+--3909-- REDIR: 0x4ec7b30 (strchrnul) redirected to 0x4c2fea0 (strchrnul)
+--3909-- REDIR: 0x4eb79b0 (free) redirected to 0x4c2ba00 (free)
+==3909== 
+==3909== HEAP SUMMARY:
+==3909==     in use at exit: 0 bytes in 0 blocks
+==3909==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==3909== 
+==3909== All heap blocks were freed -- no leaks are possible
+==3909== 
+==3909== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+--3909-- 
+--3909-- used_suppression:      2 dl-hack3-cond-1
+==3909== 
+==3909== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)

@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void swap_value(int [], int, int);
+void create_pivot(int [], int, int);
+int test_swap(int [], int, int);
+int find_swap(int [], int, int);
+
 /**
  * Read a file of integers.
  *
@@ -59,50 +64,40 @@
  * 
  *
  */
-
 int * readIntegers(const char * filename, int * numberOfIntegers)
 {
-  int x = 0;
-  FILE *fr;
   int i = 0;
+  FILE * fh;
+  int  g;
   int * arr;
+  int x = 0;
 
-  fr = fopen(filename, "r");
-  fseek(fr,0,SEEK_SET);
-  while (!feof(fr))
+  fh = fopen(filename, "r");
+  while (!feof(fh))
     {
-      i++;
+      fscanf(fh, "%d", &g);
+      ++i;
     }
-  printf("i = %d", i);
 
-
-
-
-
-
-
-
-
-
-
-  /*fr = fopen(filename, "r");
-  fseek(fr, 0, SEEK_END);
-  x = ftell(fr);
-  printf("x = %d\n", x);
-
-  *numberOfIntegers = x / sizeof(int);
+  *numberOfIntegers = i - 1;
   
-  arr = malloc(*numberOfIntegers * sizeof(int));
-  
-  fseek (fr, 0, SEEK_SET);
-   while (!feof(fr))
+  arr = malloc(*numberOfIntegers * sizeof(int));  
+  fseek (fh, 0, SEEK_SET);
+  if (fh != NULL)
     {
-      fscanf (fr, "%d", &arr[i]);
-      i++;
-      } 
-  fclose(fr);*/
-  
-    return NULL;
+      while (!feof(fh))
+	{
+	  fscanf (fh, "%d", &arr[x]);
+	  x++;
+	} 
+      fclose(fh);
+      return arr;
+    }
+  else
+    {
+      fclose(fh);
+      return NULL;
+    }
 }
 
 /**
@@ -144,8 +139,9 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
  */
 void sort(int * arr, int length)
 {
-    
+  create_pivot(arr, length, 0);
 }
+
 
 /**
  * Use binary search to find 'key' in a sorted array of integers

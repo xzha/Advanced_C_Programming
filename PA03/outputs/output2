@@ -1,4 +1,4 @@
 Unsorted array:   5   4   3   2   1
-Sorted array:     5   4   3   2   1 -- FAIL (not sorted).
+Sorted array:     1   2   3   4   5 -- correct.
 Integer '5' not found -- FAIL.
 Integer '6' not found -- pass.

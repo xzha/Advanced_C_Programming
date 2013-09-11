@@ -1,0 +1,89 @@
+==2743== Memcheck, a memory error detector
+==2743== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==2743== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==2743== Command: ./pa02 inputs/input1
+==2743== Parent PID: 2734
+==2743== 
+--2743-- 
+--2743-- Valgrind options:
+--2743--    --suppressions=/usr/lib/valgrind/debian-libc6-dbg.supp
+--2743--    --tool=memcheck
+--2743--    --leak-check=full
+--2743--    --verbose
+--2743--    --log-file=outputs/valgrind-log11
+--2743-- Contents of /proc/version:
+--2743--   Linux version 3.8.0-29-generic (buildd@roseapple) (gcc version 4.7.3 (Ubuntu/Linaro 4.7.3-1ubuntu1) ) #42-Ubuntu SMP Tue Aug 13 19:40:39 UTC 2013
+--2743-- Arch and hwcaps: AMD64, amd64-sse3-cx16-avx
+--2743-- Page sizes: currently 4096, max supported 4096
+--2743-- Valgrind library directory: /usr/lib/valgrind
+--2743-- Reading syms from /home/yaoyao/ECE264/solutions/PA02/pa02
+--2743-- Reading syms from /lib/x86_64-linux-gnu/ld-2.17.so
+--2743--   Considering /lib/x86_64-linux-gnu/ld-2.17.so ..
+--2743--   .. CRC mismatch (computed 0e805c9a wanted d5b108bd)
+--2743--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--2743--   .. CRC is valid
+--2743--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--2743--   .. CRC is valid
+--2743-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--2743--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--2743--   .. CRC mismatch (computed 8dadd6e3 wanted 096f8488)
+--2743--    object doesn't have a symbol table
+--2743--    object doesn't have a dynamic symbol table
+--2743-- Scheduler: using generic scheduler lock implementation.
+--2743-- Reading suppressions file: /usr/lib/valgrind/debian-libc6-dbg.supp
+--2743-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==2743== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-2743-by-yaoyao-on-???
+==2743== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-2743-by-yaoyao-on-???
+==2743== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-2743-by-yaoyao-on-???
+==2743== 
+==2743== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==2743== don't want to do, unless you know exactly what you're doing,
+==2743== or are doing some strange experiment):
+==2743==   /usr/lib/valgrind/../../bin/vgdb --pid=2743 ...command...
+==2743== 
+==2743== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==2743==   /path/to/gdb ./pa02
+==2743== and then give GDB the following command
+==2743==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=2743
+==2743== --pid is optional if only one valgrind process is running
+==2743== 
+--2743-- REDIR: 0x4018f40 (strlen) redirected to 0x3806c7e1 (???)
+--2743-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--2743--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--2743--   .. CRC mismatch (computed 7ae7d82a wanted 34ea3d89)
+--2743--    object doesn't have a symbol table
+--2743-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--2743--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--2743--   .. CRC mismatch (computed 272279e5 wanted bc83f658)
+--2743--    object doesn't have a symbol table
+--2743-- REDIR: 0x4018db0 (index) redirected to 0x4c2d440 (index)
+--2743-- REDIR: 0x4018e30 (strcmp) redirected to 0x4c2e480 (strcmp)
+--2743-- Reading syms from /lib/x86_64-linux-gnu/libc-2.17.so
+--2743--   Considering /lib/x86_64-linux-gnu/libc-2.17.so ..
+--2743--   .. CRC mismatch (computed 7a0d6b10 wanted 5a2fe04b)
+--2743--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--2743--   .. CRC is valid
+--2743--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--2743--   .. CRC is valid
+--2743-- REDIR: 0x4ec1990 (strcasecmp) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--2743-- REDIR: 0x4ebdd20 (strnlen) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--2743-- REDIR: 0x4ec3c60 (strncasecmp) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--2743-- REDIR: 0x4ec07a0 (memset) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--2743-- REDIR: 0x4ec0750 (memcpy@GLIBC_2.2.5) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--2743-- REDIR: 0x4ebf710 (__GI_strrchr) redirected to 0x4c2d260 (__GI_strrchr)
+--2743-- REDIR: 0x4ebc100 (strcmp) redirected to 0x4a25710 (_vgnU_ifunc_wrapper)
+--2743-- REDIR: 0x4f6cbd0 (__strcmp_sse42) redirected to 0x4c2e3e0 (strcmp)
+--2743-- REDIR: 0x4ec7b30 (strchrnul) redirected to 0x4c2fea0 (strchrnul)
+--2743-- REDIR: 0x4eb79b0 (free) redirected to 0x4c2ba00 (free)
+==2743== 
+==2743== HEAP SUMMARY:
+==2743==     in use at exit: 0 bytes in 0 blocks
+==2743==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==2743== 
+==2743== All heap blocks were freed -- no leaks are possible
+==2743== 
+==2743== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+--2743-- 
+--2743-- used_suppression:      2 dl-hack3-cond-1
+==2743== 
+==2743== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)

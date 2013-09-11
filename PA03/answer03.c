@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void swap_value(int [], int, int);
+void create_pivot(int [], int, int);
+int test_swap(int [], int, int);
+int find_swap(int [], int, int);
+
 /**
  * Read a file of integers.
  *
@@ -134,7 +139,80 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
  */
 void sort(int * arr, int length)
 {
+  create_pivot(arr, length, 0);
+}
+
+void create_pivot(int arr[], int length, int swappos)
+{
+    int pivot = swappos;
+    int pivotpoint = find_swap(arr, length, swappos);
+    int i;
+    int j;
     
+    swap_value(arr, pivotpoint, swappos);
+    
+    for (i = pivotpoint + 1; i < length; i ++)
+    {
+        for (j = pivotpoint - 1; j >= 0; j --)
+        {
+            if (arr[j] > arr[pivot] && arr[i] < arr[pivot])
+            {
+                swap_value(arr, j, i);
+            }
+        }
+    }
+
+    if (test_swap(arr, pivot - 1, swappos) != 0)
+    {
+        create_pivot(arr, pivot - 1, swappos);
+    }
+    else if (test_swap(arr, length, pivot + 1) != 0)
+    {
+        create_pivot(arr, length, pivot + 1);
+    }
+}
+
+int test_swap(int arr[], int length, int begin)
+{
+    int i;
+    int j = 0;
+    
+    for (i = begin; i < length; i ++)
+    {
+        if (arr[i] > arr[i + 1])
+        {
+            j++;
+        }
+    }
+    return j;
+}
+
+
+void swap_value(int arr [], int first, int second)
+{
+    int temp;
+    
+    temp = arr[first];
+    arr[first] = arr[second];
+    arr[second] = temp;
+}
+
+int find_swap(int arr[], int length, int pivotpoint)
+{
+    int pivot;
+    int i;
+    int j=0;
+    
+    pivot = arr[pivotpoint];
+    
+    for (i = 0; i < length; i++)
+    {
+        if (arr[i] < pivot)
+        {
+            j++;
+        }
+    }
+    return j;
 }
 
 /**
