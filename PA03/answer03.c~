@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 void swap_value(int [], int, int);
-void create_pivot(int [], int, int);
+void create_pivot(int [], int, int, int);
 int test_swap(int [], int, int);
 int find_swap(int [], int, int);
 
@@ -139,9 +139,102 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
  */
 void sort(int * arr, int length)
 {
-  create_pivot(arr, length, 0);
+  create_pivot(arr, length, 0, length);
 }
 
+void create_pivot(int arr[], int length, int swappos, int size)
+{
+    int pivot = swappos;
+    printf("\nlength = %d", length);
+    printf("\nswappos = %d", swappos);
+    int pivotpoint = find_swap(arr, length, swappos);
+    printf("\npivotpoint = %d", pivotpoint);
+    int i;
+    int j;
+    
+    printf("\narr[pivot] = %d", arr[pivot]);
+    
+    swap_value(arr, pivotpoint, swappos);
+    
+    for (i = pivotpoint + 1; i < length; i ++)
+    {
+        for (j = pivotpoint - 1; j > 0; j --)
+        {
+            if (arr[j] >= arr[pivot] && arr[i] <= arr[pivot])
+            {
+                swap_value(arr, j, i);
+            }
+        }
+    }
+    printf("\nOutput = ");
+    for (i = 0; i < size; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    if (test_swap(arr, size, 0) != 0)
+    {
+        //below pivot
+        if (test_swap(arr, pivotpoint - 1, 0) != 0)
+        {
+            create_pivot(arr, pivotpoint - 1, 0, size);
+        }
+    
+        //above pivot
+        else if (test_swap(arr, size, pivotpoint + 1) != 0)
+        {
+            create_pivot(arr, size, pivotpoint + 1, size);
+            
+        }
+        else
+        {
+            create_pivot(arr, size, 1, size);
+        }
+    }
+}
+
+int test_swap(int arr[], int length, int begin)
+{
+    int i = begin;
+    int j = 0;
+    
+    for (i = begin; i < length - 1; i ++)
+    {
+        if (arr[i] > arr[i + 1])
+        {
+            j++;
+        }
+    }
+    
+    return j;
+}
+
+
+void swap_value(int arr [], int first, int second)
+{
+    int temp;
+    
+    temp = arr[first];
+    arr[first] = arr[second];
+    arr[second] = temp;
+}
+
+int find_swap(int arr[], int length, int pivotpoint)
+{
+    int pivot;
+    int i;
+    int j=0;
+    
+    pivot = arr[pivotpoint];
+    
+    for (i = 0; i < length; i ++)
+    {
+        if (arr[i] < pivot)
+        {
+            j++;
+        }
+    }
+    return j;
+}
 
 /**
  * Use binary search to find 'key' in a sorted array of integers
