@@ -4,10 +4,11 @@
 #include <stdlib.h>
 
 void swap_value(int [], int, int);
-void create_pivot(int [], int, int, int);
-int test_swap(int [], int, int);
-int find_swap(int [], int, int);
-int find_key(int [], int, int, int);
+void pivot_sort(int [], int, int);
+//void create_pivot(int [], int, int, int);
+//int test_swap(int [], int, int);
+//int find_swap(int [], int, int);
+//int find_key(int [], int, int, int);
 
 /**
  * Read a file of integers.
@@ -73,8 +74,8 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
   int * arr;
   int x = 0;
 
-  fh = fopen(filename, "r");
-  while (!feof(fh))
+  fh = fopen(filename, "r"); // create file handle
+  while (!feof(fh)) // while not at end of file
     {
       fscanf(fh, "%d", &g);
       ++i;
@@ -82,13 +83,13 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
 
   *numberOfIntegers = i - 1;
   
-  arr = malloc(*numberOfIntegers * sizeof(int));  
-  fseek (fh, 0, SEEK_SET);
+  arr = malloc(*numberOfIntegers * sizeof(int)); // create array  
+  fseek (fh, 0, SEEK_SET); // reset to the top of the file
   if (fh != NULL)
     {
       while (!feof(fh))
 	{
-	  fscanf (fh, "%d", &arr[x]);
+	  fscanf (fh, "%d", &arr[x]); // store values into array
 	  x++;
 	} 
       fclose(fh);
@@ -140,9 +141,50 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
  */
 void sort(int * arr, int length)
 {
-  create_pivot(arr, length, 0, length);
+  //create_pivot(arr, length, 0, length);
+  pivot_sort(arr, 0, length - 1); // based on the method introduced by the professor
 }
 
+void pivot_sort(int arr[], int bottom, int top)
+{
+  int pivot;
+  int left;
+  int right;
+
+  pivot = bottom; // set pivot point, first number of array
+  left = bottom;
+  right = top;
+
+  if (bottom < top) 
+    {
+      while (left < right)
+	{
+	  while (arr[left] < arr[pivot])
+	    {
+	      left ++;
+	    }
+	  while (arr[right] > arr[pivot])
+	    {
+	      right --;
+	    }
+	  swap_value(arr, left, right); // swap left and right
+	}
+
+      swap_value(arr, right, pivot); // move pivot to the right place
+      pivot_sort(arr, right + 1, top); // sort right side of pivot
+      pivot_sort(arr, bottom, right - 1); // sort left side of pivot
+    }
+}
+void swap_value(int arr [], int first, int second)
+{
+    int temp;
+    
+    temp = arr[first];
+    arr[first] = arr[second];
+    arr[second] = temp;
+}
+
+/* The old quick sort function takes too long to debug
 void create_pivot(int arr[], int length, int swappos, int size)
 {
     int pivot = swappos;
@@ -201,15 +243,6 @@ int test_swap(int arr[], int length, int begin)
 }
 
 
-void swap_value(int arr [], int first, int second)
-{
-    int temp;
-    
-    temp = arr[first];
-    arr[first] = arr[second];
-    arr[second] = temp;
-}
-
 int find_swap(int arr[], int length, int pivotpoint)
 {
     int pivot;
@@ -226,7 +259,7 @@ int find_swap(int arr[], int length, int pivotpoint)
         }
     }
     return j;
-}
+} */
 
 /**
  * Use binary search to find 'key' in a sorted array of integers
@@ -277,7 +310,7 @@ int search(int * arr, int length, int key)
 {
   int mid;
   
-  mid = find_key(arr, length -1, key, 0); //valgrind
+  mid = find_key(arr, length -1, key, 0);
   return mid;
 }
 
@@ -291,17 +324,17 @@ int find_key(int arr[], int top, int key, int bottom)
     {
       return - 1;
     }
-  if (arr[mid] == key)
+  if (arr[mid] == key) // if found
     {
       return mid;
     }
   else if (arr[mid] < key)
     {
-      return find_key(arr, top, key, mid + 1);
+      return find_key(arr, top, key, mid + 1); // find key in second half of array
     }
   else if (arr[mid] > key)
     {
-      return find_key(arr, mid - 1, key, bottom);
+      return find_key(arr, mid - 1, key, bottom); // find key in first half of array
     }
   return - 1;
 }
