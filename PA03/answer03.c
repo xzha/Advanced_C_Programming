@@ -7,6 +7,7 @@ void swap_value(int [], int, int);
 void create_pivot(int [], int, int, int);
 int test_swap(int [], int, int);
 int find_swap(int [], int, int);
+int find_key(int [], int, int, int);
 
 /**
  * Read a file of integers.
@@ -173,9 +174,9 @@ void create_pivot(int arr[], int length, int swappos, int size)
         //above pivot
         else if (test_swap(arr, size, pivotpoint + 1) != 0)
         {
-            create_pivot(arr, size, pivotpoint + 1, size);
-            
+            create_pivot(arr, size, pivotpoint + 1, size);           
         }
+	//first value is not eligible to be the pivot
         else
         {
             create_pivot(arr, size, 1, size);
@@ -271,9 +272,36 @@ int find_swap(int arr[], int length, int pivotpoint)
  * }
  * return -1;
  */
+
 int search(int * arr, int length, int key)
 {
-    return -1;
+  int mid;
+  
+  mid = find_key(arr, length -1, key, 0); //valgrind
+  return mid;
 }
 
+int find_key(int arr[], int top, int key, int bottom)
+{
+  int mid;
+  
+  mid = (top + bottom)/2;
 
+  if (bottom > top)
+    {
+      return - 1;
+    }
+  if (arr[mid] == key)
+    {
+      return mid;
+    }
+  else if (arr[mid] < key)
+    {
+      return find_key(arr, top, key, mid + 1);
+    }
+  else if (arr[mid] > key)
+    {
+      return find_key(arr, mid - 1, key, bottom);
+    }
+  return - 1;
+}

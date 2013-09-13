@@ -7,6 +7,7 @@ void swap_value(int [], int, int);
 void create_pivot(int [], int, int, int);
 int test_swap(int [], int, int);
 int find_swap(int [], int, int);
+int find_key(int[], int, int, int);
 
 /**
  * Read a file of integers.
@@ -145,14 +146,10 @@ void sort(int * arr, int length)
 void create_pivot(int arr[], int length, int swappos, int size)
 {
     int pivot = swappos;
-    printf("\nlength = %d", length);
-    printf("\nswappos = %d", swappos);
     int pivotpoint = find_swap(arr, length, swappos);
-    printf("\npivotpoint = %d", pivotpoint);
     int i;
     int j;
-    
-    printf("\narr[pivot] = %d", arr[pivot]);
+    int k = 0; // fix pass by address
     
     swap_value(arr, pivotpoint, swappos);
     
@@ -166,11 +163,7 @@ void create_pivot(int arr[], int length, int swappos, int size)
             }
         }
     }
-    printf("\nOutput = ");
-    for (i = 0; i < size; i++)
-    {
-        printf("%d ", arr[i]);
-    }
+
     if (test_swap(arr, size, 0) != 0)
     {
         //below pivot
@@ -182,12 +175,13 @@ void create_pivot(int arr[], int length, int swappos, int size)
         //above pivot
         else if (test_swap(arr, size, pivotpoint + 1) != 0)
         {
-            create_pivot(arr, size, pivotpoint + 1, size);
-            
+            create_pivot(arr, size, pivotpoint + 1, size);           
         }
+	//first value is not eligible to be the pivot
         else
         {
-            create_pivot(arr, size, 1, size);
+            create_pivot(arr, size, 1 + k, size);
+	    k++;
         }
     }
 }
@@ -280,9 +274,39 @@ int find_swap(int arr[], int length, int pivotpoint)
  * }
  * return -1;
  */
+
 int search(int * arr, int length, int key)
 {
-    return -1;
+  int mid;
+
+  mid = find_key(arr, length, key, 0);
+  return mid;
+}
+
+int find_key(int arr[], int top, int key, int bottom)
+{
+  int mid;
+
+  mid = (top + bottom)/2;
+
+  if (bottom > top)
+    {
+      return - 1;
+    }
+  if (arr[mid] == key)
+    {
+      return mid;
+    }
+  else if (arr[mid] < key)
+    {
+      return find_key(arr, top, key, mid);
+    }
+  else if (arr[mid] > key)
+    {
+      return find_key(arr, mid, key, bottom);
+    }
+
+  return - 1;
 }
 
 
