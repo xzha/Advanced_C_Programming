@@ -171,7 +171,7 @@ void pivot_sort(int arr[], int bottom, int top)
 	}
 
       swap_value(arr, right, pivot); // move pivot to the right place
-      pivot_sort(arr, right + 1, top); // sort right side of pivot
+      pivot_sort(arr, right + 1, top); // sort right side of pivot + 1
       pivot_sort(arr, bottom, right - 1); // sort left side of pivot
     }
 }
@@ -330,7 +330,7 @@ int find_key(int arr[], int top, int key, int bottom)
     }
   else if (arr[mid] < key)
     {
-      return find_key(arr, top, key, mid + 1); // find key in second half of array
+      return find_key(arr, top, key, mid + 1); // find key in second half of array + 1
     }
   else if (arr[mid] > key)
     {

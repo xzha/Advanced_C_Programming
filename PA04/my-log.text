@@ -1,3 +1,9 @@
+commit 00127d47222846af51d28d0a6698515ab54b6897
+Author: xzha <xzha@purdue.edu>
+Date:   Sat Sep 21 22:56:27 2013 -0400
+
+    Improved the program's speed and commented the code
+
 commit c90eec4f868f31a2ff458cc9493caf0a91f6d7ad
 Author: xzha <xzha@purdue.edu>
 Date:   Fri Sep 20 00:11:21 2013 -0400
