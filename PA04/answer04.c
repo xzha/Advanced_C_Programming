@@ -73,7 +73,6 @@ void partition(int arr[], int value, int i)
   int j;
  
   // applied the methods learned from class
-
   if (value == 0 /*&& count(arr, i - 1) == input*/)
     {
       print(arr, i);

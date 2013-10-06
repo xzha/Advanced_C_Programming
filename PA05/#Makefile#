@@ -53,6 +53,7 @@ help:
 
 $(TARGET): $(OBJS) | environment
 	$(GCC) $(CFLAGS) $(OBJS) $(LIBS) -o $@
+fdas
 
 $(OBJF)/%.o: %.c | environment
 	@$(GCC) -MM $(CFLAGS) $< | sed 's,^\([^ ]\),$(OBJF)\/\1,g' | sed '$$ s,$$, \\,' > $(OBJF)/$<.P
