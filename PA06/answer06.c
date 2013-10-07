@@ -173,30 +173,46 @@
 struct Image * loadImage(const char* filename)
 {
   FILE * fh;
-  long int filesize;
-  char * arr;
-  size_t result;
-  int i;
-  int j;
+  struct ImageHeader imageheader;
+  int numread;
+  int comread;
+  int pixelread;
+  char * comment_arr;
+  int * pixel_arr;
 
   fh = fopen(filename, "rb");
   if (fh != NULL)
     {
       printf("SUCCESS\n");
-
-      fseek (fh, 0, SEEK_END);
-      filesize = ftell(fh);
-      fseek (fh, 0, SEEK_SET);
-      printf("%ld\n", filesize);
-
-      arr = malloc(sizeof(char) * filesize);
-
-      result = fread (arr, sizeof(char), 16, fh);
-      if (result != 16)
+      
+      numread = fread(&imageheader, sizeof(struct ImageHeader), 1, fh);
+      if (numread != 1)
 	{
-	  printf("CAN'T READ 16 BYTES\n");
 	  return NULL;
 	}
+      if (imageheader.magic_bits != ECE264_IMAGE_MAGIC_BITS)
+	{
+	  return NULL;
+	}
+      if (imageheader.width <  0 || imageheader.height < 0)
+	{
+	  return NULL;
+	}
+
+      comment_arr = malloc(imageheader.comment_len * sizeof(char));
+      if (imageheader.comment_len > 0 && comment_arr == NULL)
+      	{
+      	  return NULL;
+      	}
+      comread = fread(&comment_arr, sizeof(char), imageheader.comment_len, fh);
+      // add check read comment
+      
+
+      //int i;
+      //for (i = 0; i < pixelread; i ++)
+      //{
+      //	  printf("hi %d ", pixel_arr[i]);
+      //	}
 
       fclose (fh);
     }
