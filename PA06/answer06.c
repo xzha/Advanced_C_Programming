@@ -172,7 +172,40 @@
  */
 struct Image * loadImage(const char* filename)
 {
-  printf("\n\n\n-------------------\n\n\n");
+  FILE * fh;
+  long int filesize;
+  char * arr;
+  size_t result;
+  int i;
+  int j;
+
+  fh = fopen(filename, "rb");
+  if (fh != NULL)
+    {
+      printf("SUCCESS\n");
+
+      fseek (fh, 0, SEEK_END);
+      filesize = ftell(fh);
+      fseek (fh, 0, SEEK_SET);
+      printf("%ld\n", filesize);
+
+      arr = malloc(sizeof(char) * filesize);
+
+      result = fread (arr, sizeof(char), 16, fh);
+      if (result != 16)
+	{
+	  printf("CAN'T READ 16 BYTES\n");
+	  return NULL;
+	}
+
+      fclose (fh);
+    }
+  else
+    {
+      printf("ERROR\n");
+      fclose (fh);
+      return NULL;
+    }
     return NULL;
 }
 
