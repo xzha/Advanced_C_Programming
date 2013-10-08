@@ -38,7 +38,7 @@ $(OBJF)/%.o: %.c | environment
 
 ${TESTS}: test%: $(TARGET) | environment
 	@echo '========================================================================='
-	@echo ' testing #$* .......'
+	@echo ' test #$*'
 	@echo '========================================================================='
 	./$(TARGET) inputs/0$*-unnormalized.ee264  outputs/0$*-normalized.ppm
 #	cat outputs/01-unnormalized.ppm | sort | diff -w expected(copy)/01-normalized.ppm - 
@@ -47,4 +47,3 @@ ${TESTS}: test%: $(TARGET) | environment
 	@echo
 	@bin/valrgind-checker.sh outputs/memoutput1
 	@echo
-	@make clean
