@@ -174,74 +174,81 @@ struct Image * loadImage(const char* filename)
 {
   FILE * fh;
   struct ImageHeader imageheader;
+  struct Image * image;
   int numread;
-  int comread;
   int pixelread;
-  char * comment_arr;
-  uint8_t * pixel_arr;
-  long int numpixels;
+  int commentread;
+  long int size;
   
   fh = fopen(filename, "rb");
   if (fh != NULL)
     {
-      printf("SUCCESS\n");
-      
       numread = fread(&imageheader, sizeof(struct ImageHeader), 1, fh);
       if (numread != 1)
 	{
-	  printf("header is not 16 bytes\n");
+	  fclose(fh);
 	  return NULL;
 	}
       if (imageheader.magic_bits != ECE264_IMAGE_MAGIC_BITS)
 	{
-	  printf("magic bits are not that same\n");
-	  return NULL;
-	}
-      if ((imageheader.width * imageheader.height) <= 0)
-	{
-	  printf("imageheader.width/height < 0\n");
+	  fclose(fh);
 	  return NULL;
 	}
 
-      comment_arr = malloc(imageheader.comment_len * sizeof(char));
-      if (imageheader.comment_len > 0 && comment_arr == NULL)
-      	{
-	  printf("invalid malloc for comment_arr\n");
-      	  return NULL;
-      	}
-      comread = fread(comment_arr, sizeof(char), imageheader.comment_len, fh);
-      if (comread != imageheader.comment_len)
+      image = malloc(sizeof(struct Image));
+
+      image->height = imageheader.height;
+      image->width = imageheader.width;
+      size = image->height * image->width;
+      if (size <= 0)
 	{
-	  printf("comread != imageheader.comment_len\n");
+	  free(image);
+	  fclose(fh);
 	  return NULL;
 	}
       
-      numpixels = imageheader.height * imageheader.width;
-      pixel_arr = malloc(numpixels * sizeof(uint8_t));
-      pixelread = fread(pixel_arr, sizeof(uint8_t), numpixels, fh);      
-      if (pixelread != numpixels)
+      image->comment = malloc(imageheader.comment_len * sizeof(char));
+      if (!image->comment)
 	{
-	  printf("NOT EVERY BYTES WERE READ");
+	  free(image->comment);
+	  free(image);
+	  fclose(fh);
 	  return NULL;
 	}
-      
-      struct Image image;
-      struct Image *ptr_image;
+      commentread = fread(image->comment, sizeof(char), imageheader.comment_len, fh);
+      if (commentread != imageheader.comment_len)
+	{
+	  free(image->comment);
+	  free(image);
+	  fclose(fh);
+	  return NULL;
+	}
 
-      ptr_image = &image;
+      image->data = malloc(size * sizeof(uint8_t));
+      if (!image->data)
+	{
+	  free(image->comment);
+	  free(image->data);
+	  free(image);
+	  fclose(fh);
+	  return NULL;
+	}
+      pixelread = fread(image->data, sizeof(uint8_t), size, fh);
+      if (pixelread != size)
+	{
+	  free(image->comment);
+	  free(image->data);
+	  free(image);
+	  fclose(fh);
+	  return NULL;
+	}
 
-      ptr_image->width = imageheader.width;
-      ptr_image->height = imageheader.height;
-      ptr_image->comment = comment_arr;
-      ptr_image->data = pixel_arr;
-      
-      fclose (fh);
-      return  ptr_image;
+      fclose(fh);
+      return image;
     }
   else
     {
-      printf("ERROR\n");
-      fclose (fh);
+      printf("here8");
       return NULL;
     }
     return NULL;
@@ -260,8 +267,12 @@ struct Image * loadImage(const char* filename)
  */
 void freeImage(struct Image * image)
 {
-  // free(image->data);
-  //free(image->comment);
+  if (image != NULL)
+    {
+      free(image->comment);
+      free(image->data);
+      free(image);
+    }
 }
 
 /*
@@ -290,17 +301,10 @@ void freeImage(struct Image * image)
  */
 void linearNormalization(struct Image * image)
 {
-  const int size = image->width * image->height;
-  int min = 300;
-  int max = 0;
+  long int size = image->width * image->height;
+  int min = image->data[0];
+  int max = image->data[0];
   int i;
-
-  printf("size = %d\n", size);
-  //printf("\n\nInput\n");
-  //for (i = 0; i < size; i ++)
-  //{
-  //  printf("%d ", image->data[i]);
-  // }
 
   for (i = 0; i < size; i ++)
     {
@@ -314,17 +318,8 @@ void linearNormalization(struct Image * image)
 	}
     }
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size + 1; i++)
     {
-      image->data[i] = (image->data[i] - min) * 255 / (max - min);
+      image->data[i] = ((image->data[i] - min) * 255) / (max - min);
     }
-
-  //printf("\n\nModified\n");
-  //for (i = 0; i < size; i++)
-  //  {
-  //    printf("%d ", image->data[i]);
-  //  }
 }
-
-
-

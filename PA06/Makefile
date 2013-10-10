@@ -43,7 +43,7 @@ ${TESTS}: test%: $(TARGET) | environment
 	./$(TARGET) inputs/0$*-unnormalized.ee264  outputs/0$*-normalized.ppm
 #	cat outputs/01-unnormalized.ppm | sort | diff -w expected(copy)/01-normalized.ppm - 
 	diff -w outputs/0$*-normalized.ppm expected/0$*-normalized.ppm
-	$(VALGRIND) --log-file=outputs/memoutput1 ./$(TARGET) inputs/01-unnormalized.ee264 > /dev/null
+	$(VALGRIND) --log-file=outputs/memoutput$* ./$(TARGET) inputs/0$*-unnormalized.ee264 outputs/0$*-normalized.ppm
 	@echo
-	@bin/valrgind-checker.sh outputs/memoutput1
+	@bin/valgrind-checker.sh outputs/memoutput1
 	@echo
