@@ -183,6 +183,7 @@ struct Image * loadImage(const char* filename)
   fh = fopen(filename, "rb");
   if (fh != NULL)
     {
+      //Read the header structure
       numread = fread(&imageheader, sizeof(struct ImageHeader), 1, fh);
       if (numread != 1)
 	{
@@ -195,6 +196,7 @@ struct Image * loadImage(const char* filename)
 	  return NULL;
 	}
 
+      //Allocate memory for the image structure
       image = malloc(sizeof(struct Image));
 
       image->height = imageheader.height;
@@ -207,6 +209,7 @@ struct Image * loadImage(const char* filename)
 	  return NULL;
 	}
       
+      //Allocate memory for the comment
       image->comment = malloc(imageheader.comment_len * sizeof(char));
       if (!image->comment)
 	{
@@ -224,6 +227,7 @@ struct Image * loadImage(const char* filename)
 	  return NULL;
 	}
 
+      //Allocate memory for the data
       image->data = malloc(size * sizeof(uint8_t));
       if (!image->data)
 	{
@@ -248,7 +252,6 @@ struct Image * loadImage(const char* filename)
     }
   else
     {
-      printf("here8");
       return NULL;
     }
     return NULL;
