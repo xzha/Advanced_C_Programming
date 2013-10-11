@@ -4,7 +4,7 @@ CFLAGS = -g -Wall -Wshadow
 LIBS = -lm
 SOURCES = answer06.c pa06.c
 TARGET = pa06
-TESTN := $(shell seq 1 5)
+TESTN := $(shell seq 1 14)
 VALGRIND = valgrind --tool=memcheck --leak-check=full --verbose
 
 #-----------------------------------------------------------------
@@ -40,8 +40,7 @@ ${TESTS}: test%: $(TARGET) | environment
 	@echo '========================================================================='
 	@echo ' test #$*'
 	@echo '========================================================================='
-	./$(TARGET) inputs/0$*-unnormalized.ee264  outputs/0$*-normalized.ppm
-#	cat outputs/01-unnormalized.ppm | sort | diff -w expected(copy)/01-normalized.ppm - 
+	./$(TARGET) inputs/0$*-unnormalized.ee264  outputs/0$*-normalized.ppm 
 	diff -w outputs/0$*-normalized.ppm expected/0$*-normalized.ppm
 	$(VALGRIND) --log-file=outputs/memoutput$* ./$(TARGET) inputs/0$*-unnormalized.ee264 outputs/0$*-normalized.ppm
 	@echo
