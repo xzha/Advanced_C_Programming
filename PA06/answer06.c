@@ -321,7 +321,7 @@ void linearNormalization(struct Image * image)
 	}
     }
 
-  for (i = 0; i < size + 1; i++)
+  for (i = 0; i < size; i++)
     {
       image->data[i] = ((image->data[i] - min) * 255) / (max - min);
     }
