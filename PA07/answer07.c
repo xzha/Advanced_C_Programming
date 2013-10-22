@@ -154,11 +154,11 @@ Node * List_delete(Node * head, int index)
 {
   if (head == NULL)
     {
-      return NULL;
+      return NULL; // reach the end of the sparse array
     }
   if ((head->index) == index)
     {
-      Node * nextone = head->next;
+      Node * nextone = head->next; 
       free (head);
       return nextone;
     }
