@@ -1,89 +1,89 @@
-==3240== Memcheck, a memory error detector
-==3240== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
-==3240== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
-==3240== Command: ./pa07 inputs/input11_A inputs/input11_B
-==3240== Parent PID: 3009
-==3240== 
---3240-- 
---3240-- Valgrind options:
---3240--    --suppressions=/usr/lib/valgrind/debian-libc6-dbg.supp
---3240--    --tool=memcheck
---3240--    --leak-check=full
---3240--    --verbose
---3240--    --log-file=outputs/memoutput11
---3240-- Contents of /proc/version:
---3240--   Linux version 3.11.0-12-generic (buildd@allspice) (gcc version 4.8.1 (Ubuntu/Linaro 4.8.1-10ubuntu7) ) #19-Ubuntu SMP Wed Oct 9 16:20:46 UTC 2013
---3240-- Arch and hwcaps: AMD64, amd64-sse3-cx16-avx
---3240-- Page sizes: currently 4096, max supported 4096
---3240-- Valgrind library directory: /usr/lib/valgrind
---3240-- Reading syms from /home/yaoyao/ECE264/solutions/PA07/pa07
---3240-- Reading syms from /lib/x86_64-linux-gnu/ld-2.17.so
---3240--   Considering /lib/x86_64-linux-gnu/ld-2.17.so ..
---3240--   .. CRC mismatch (computed 51e60a7a wanted 521e3c74)
---3240--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
---3240--   .. CRC is valid
---3240--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
---3240--   .. CRC is valid
---3240-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
---3240--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
---3240--   .. CRC mismatch (computed c436d3d9 wanted 99aa3883)
---3240--    object doesn't have a symbol table
---3240--    object doesn't have a dynamic symbol table
---3240-- Scheduler: using generic scheduler lock implementation.
---3240-- Reading suppressions file: /usr/lib/valgrind/debian-libc6-dbg.supp
---3240-- Reading suppressions file: /usr/lib/valgrind/default.supp
-==3240== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-3240-by-yaoyao-on-???
-==3240== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-3240-by-yaoyao-on-???
-==3240== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-3240-by-yaoyao-on-???
-==3240== 
-==3240== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==3240== don't want to do, unless you know exactly what you're doing,
-==3240== or are doing some strange experiment):
-==3240==   /usr/lib/valgrind/../../bin/vgdb --pid=3240 ...command...
-==3240== 
-==3240== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==3240==   /path/to/gdb ./pa07
-==3240== and then give GDB the following command
-==3240==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=3240
-==3240== --pid is optional if only one valgrind process is running
-==3240== 
---3240-- REDIR: 0x4018f40 (strlen) redirected to 0x3806e491 (???)
---3240-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
---3240--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
---3240--   .. CRC mismatch (computed 826470ab wanted a8b7e9f3)
---3240--    object doesn't have a symbol table
---3240-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
---3240--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
---3240--   .. CRC mismatch (computed d4fd7975 wanted b90a895a)
---3240--    object doesn't have a symbol table
---3240-- REDIR: 0x4018db0 (index) redirected to 0x4c2d480 (index)
---3240-- REDIR: 0x4018e30 (strcmp) redirected to 0x4c2e560 (strcmp)
---3240-- Reading syms from /lib/x86_64-linux-gnu/libc-2.17.so
---3240--   Considering /lib/x86_64-linux-gnu/libc-2.17.so ..
---3240--   .. CRC mismatch (computed 2c8ee98b wanted da4a7364)
---3240--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
---3240--   .. CRC is valid
---3240--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
---3240--   .. CRC is valid
---3240-- REDIR: 0x4ec1980 (strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---3240-- REDIR: 0x4ebdd10 (strnlen) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---3240-- REDIR: 0x4ec3c50 (strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---3240-- REDIR: 0x4ec0790 (memset) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---3240-- REDIR: 0x4ec0740 (memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
---3240-- REDIR: 0x4ebf700 (__GI_strrchr) redirected to 0x4c2d2a0 (__GI_strrchr)
---3240-- REDIR: 0x4eb7470 (malloc) redirected to 0x4c2a270 (malloc)
---3240-- REDIR: 0x4eb7900 (free) redirected to 0x4c2b5a0 (free)
---3240-- REDIR: 0x4ebdc30 (__GI_strlen) redirected to 0x4c2d830 (__GI_strlen)
---3240-- REDIR: 0x4ec7b20 (strchrnul) redirected to 0x4c300f0 (strchrnul)
-==3240== 
-==3240== HEAP SUMMARY:
-==3240==     in use at exit: 0 bytes in 0 blocks
-==3240==   total heap usage: 17 allocs, 17 frees, 1,352 bytes allocated
-==3240== 
-==3240== All heap blocks were freed -- no leaks are possible
-==3240== 
-==3240== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
---3240-- 
---3240-- used_suppression:      2 dl-hack3-cond-1
-==3240== 
-==3240== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+==3229== Memcheck, a memory error detector
+==3229== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==3229== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==3229== Command: ./pa07 inputs/input11_A inputs/input11_B
+==3229== Parent PID: 2996
+==3229== 
+--3229-- 
+--3229-- Valgrind options:
+--3229--    --suppressions=/usr/lib/valgrind/debian-libc6-dbg.supp
+--3229--    --tool=memcheck
+--3229--    --leak-check=full
+--3229--    --verbose
+--3229--    --log-file=outputs/memoutput11
+--3229-- Contents of /proc/version:
+--3229--   Linux version 3.11.0-12-generic (buildd@allspice) (gcc version 4.8.1 (Ubuntu/Linaro 4.8.1-10ubuntu7) ) #19-Ubuntu SMP Wed Oct 9 16:20:46 UTC 2013
+--3229-- Arch and hwcaps: AMD64, amd64-sse3-cx16-avx
+--3229-- Page sizes: currently 4096, max supported 4096
+--3229-- Valgrind library directory: /usr/lib/valgrind
+--3229-- Reading syms from /home/yaoyao/ECE264/solutions/PA07/pa07
+--3229-- Reading syms from /lib/x86_64-linux-gnu/ld-2.17.so
+--3229--   Considering /lib/x86_64-linux-gnu/ld-2.17.so ..
+--3229--   .. CRC mismatch (computed 51e60a7a wanted 521e3c74)
+--3229--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--3229--   .. CRC is valid
+--3229--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--3229--   .. CRC is valid
+--3229-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--3229--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--3229--   .. CRC mismatch (computed c436d3d9 wanted 99aa3883)
+--3229--    object doesn't have a symbol table
+--3229--    object doesn't have a dynamic symbol table
+--3229-- Scheduler: using generic scheduler lock implementation.
+--3229-- Reading suppressions file: /usr/lib/valgrind/debian-libc6-dbg.supp
+--3229-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==3229== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-3229-by-yaoyao-on-???
+==3229== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-3229-by-yaoyao-on-???
+==3229== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-3229-by-yaoyao-on-???
+==3229== 
+==3229== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==3229== don't want to do, unless you know exactly what you're doing,
+==3229== or are doing some strange experiment):
+==3229==   /usr/lib/valgrind/../../bin/vgdb --pid=3229 ...command...
+==3229== 
+==3229== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==3229==   /path/to/gdb ./pa07
+==3229== and then give GDB the following command
+==3229==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=3229
+==3229== --pid is optional if only one valgrind process is running
+==3229== 
+--3229-- REDIR: 0x4018f40 (strlen) redirected to 0x3806e491 (???)
+--3229-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--3229--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--3229--   .. CRC mismatch (computed 826470ab wanted a8b7e9f3)
+--3229--    object doesn't have a symbol table
+--3229-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--3229--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--3229--   .. CRC mismatch (computed d4fd7975 wanted b90a895a)
+--3229--    object doesn't have a symbol table
+--3229-- REDIR: 0x4018db0 (index) redirected to 0x4c2d480 (index)
+--3229-- REDIR: 0x4018e30 (strcmp) redirected to 0x4c2e560 (strcmp)
+--3229-- Reading syms from /lib/x86_64-linux-gnu/libc-2.17.so
+--3229--   Considering /lib/x86_64-linux-gnu/libc-2.17.so ..
+--3229--   .. CRC mismatch (computed 2c8ee98b wanted da4a7364)
+--3229--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--3229--   .. CRC is valid
+--3229--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--3229--   .. CRC is valid
+--3229-- REDIR: 0x4ec1980 (strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3229-- REDIR: 0x4ebdd10 (strnlen) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3229-- REDIR: 0x4ec3c50 (strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3229-- REDIR: 0x4ec0790 (memset) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3229-- REDIR: 0x4ec0740 (memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--3229-- REDIR: 0x4ebf700 (__GI_strrchr) redirected to 0x4c2d2a0 (__GI_strrchr)
+--3229-- REDIR: 0x4eb7470 (malloc) redirected to 0x4c2a270 (malloc)
+--3229-- REDIR: 0x4eb7900 (free) redirected to 0x4c2b5a0 (free)
+--3229-- REDIR: 0x4ebdc30 (__GI_strlen) redirected to 0x4c2d830 (__GI_strlen)
+--3229-- REDIR: 0x4ec7b20 (strchrnul) redirected to 0x4c300f0 (strchrnul)
+==3229== 
+==3229== HEAP SUMMARY:
+==3229==     in use at exit: 0 bytes in 0 blocks
+==3229==   total heap usage: 17 allocs, 17 frees, 1,352 bytes allocated
+==3229== 
+==3229== All heap blocks were freed -- no leaks are possible
+==3229== 
+==3229== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+--3229-- 
+--3229-- used_suppression:      2 dl-hack3-cond-1
+==3229== 
+==3229== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
