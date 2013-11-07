@@ -20,8 +20,12 @@
 
 SparseNode *SparseNode_create(int index, int value)
 {
-
-  return NULL;
+  SparseNode * sn = malloc(sizeof(SparseNode)); // malloc for the tree node 
+  sn -> right = NULL;
+  sn -> left = NULL;
+  sn -> value = value;
+  sn -> index = index;
+  return sn;
 }
 
 /* Add a particular value into a sparse array tree on a particular index.
@@ -44,8 +48,26 @@ SparseNode *SparseNode_create(int index, int value)
 
 SparseNode * SparseArray_insert ( SparseNode * array, int index, int value )
 {
+  if (array == NULL) 
+    {
+      return SparseNode_create(index, value); // create root 
+    }
+  if ((array -> index) == index)
+    {
+      array->value = value; // store the latest value
+      if (array-> value == 0)
+	{
+	  array = SparseArray_remove(array, index); // remove the 0
+	}
+      return array;
+    }
+  if ((array -> index) > index)
+    {
+      array -> left = SparseArray_insert(array->left, index, value);
+      return array;
+    }
+  array->right = SparseArray_insert(array->right, index, value);
   return array;
-
 }
 
 /* Build a sparse array tree from given indices and values with specific length.
@@ -70,7 +92,18 @@ SparseNode * SparseArray_insert ( SparseNode * array, int index, int value )
 
 SparseNode *SparseArray_build(int * indicies, int * values, int length)
 {
-  return NULL;
+  int i;
+  SparseNode * root = NULL;
+
+  for (i = 0; i < length; i++)
+    {
+      if (values[i] != 0)
+	{
+	  root = SparseArray_insert(root, indicies[i], values[i]); 
+	}
+    }
+
+  return root;
 }
 
 /* Destroy an entire sparse array tree. 
@@ -86,7 +119,13 @@ SparseNode *SparseArray_build(int * indicies, int * values, int length)
  */
 void SparseArray_destroy ( SparseNode * array )
 {
-
+  if (array == NULL)
+    {
+      return;
+    }
+  SparseArray_destroy(array -> left);
+  SparseArray_destroy(array -> right);
+  free(array);
 }
 
 /* Retrieve the smallest index in the sparse array tree.
@@ -101,7 +140,18 @@ void SparseArray_destroy ( SparseNode * array )
  */
 int SparseArray_getMin ( SparseNode * array )
 {
-  return 0;
+  int min = array->index;
+
+  while (array != NULL)
+    {
+      if (array -> index < min)
+	{
+	  min = array -> index; 
+	}
+      array = array -> left; // keep going left for the smallest value
+    }
+
+  return min;
 }
 
 /* Retrieve the largest index in the sparse array tree. 
@@ -116,8 +166,18 @@ int SparseArray_getMin ( SparseNode * array )
  */
 int SparseArray_getMax ( SparseNode * array )
 {
+  int max = array -> index;
 
-  return 0 ;
+  while (array != NULL)
+    {
+      if (array -> index > max)
+	{
+	  max = array -> index;
+	}
+      array = array -> right; // keep going right for the highest value
+    }
+
+  return max ;
 }
 
 
@@ -137,8 +197,19 @@ int SparseArray_getMax ( SparseNode * array )
  */
 SparseNode * SparseArray_getNode(SparseNode * array, int index )
 {
-
-  return NULL;
+  if (array == NULL)
+    {
+      return NULL;
+    }
+  if ((array -> index) == index)
+    {
+      return array; // return the address where desired index is at
+    }
+  if ((array -> index) > index)
+    {
+      return SparseArray_getNode(array -> left, index);
+    }
+  return SparseArray_getNode(array -> right, index);
 }
 
 /* Remove a value associated with a particular index from the sparse
@@ -170,7 +241,51 @@ SparseNode * SparseArray_getNode(SparseNode * array, int index )
 */
 SparseNode * SparseArray_remove ( SparseNode * array, int index )
 {
-  return array ;
+  if (array == NULL) // from lecture notes and textbook
+    {
+      return NULL;
+    }
+  if (array -> index > index)
+    {
+      array -> left = SparseArray_remove(array -> left, index);
+      return array;
+    }
+  if (array -> index < index)
+    {
+      array -> right = SparseArray_remove(array -> right, index);
+      return array; 
+    }
+      
+  if (array-> left == NULL && array -> right == NULL)
+    {
+      free(array);
+      return NULL;
+    }
+  if (array -> right == NULL)
+    {
+      SparseNode * nextoneleft = array -> left;
+      free(array);
+      return nextoneleft;
+    }
+  if (array -> left == NULL)
+    {
+      SparseNode * nextoneright = array -> right;
+      free(array);
+      return nextoneright; 
+    }
+  SparseNode * temp = array -> right;
+  while ((temp -> left) != NULL)
+    {
+      temp = temp->left;
+    }
+  int tempvalue = temp -> value;
+  int tempindex = temp -> index;
+  temp -> value = array -> value;
+  array -> value = tempvalue;
+  temp -> index = array -> index;
+  array -> index = tempindex; 
+  array -> right = SparseArray_remove(array -> right, index);
+  return array; 
 }
 
 /* The function makes a copy of the input sparse array tree
@@ -187,8 +302,19 @@ SparseNode * SparseArray_remove ( SparseNode * array, int index )
 
 SparseNode * SparseArray_copy(SparseNode * array)
 {
+  SparseNode * tempcopy = NULL;
 
-  return NULL;
+  if (array != NULL)
+    {
+      tempcopy = malloc(sizeof(SparseNode));
+      tempcopy -> index = array -> index;
+      tempcopy -> value = array -> value;
+      tempcopy -> left = SparseArray_copy(array -> left);
+      tempcopy -> right = SparseArray_copy(array -> right);
+    }
+
+  return tempcopy;
+  
 }
 
 /* Merge array_1 and array_2, and return the result array. 
@@ -215,10 +341,52 @@ SparseNode * SparseArray_copy(SparseNode * array)
  * 
  * Hint: you may write new functions
  */
+SparseNode * SparseArray_realmerge(SparseNode*, SparseNode*); // merge function for recursion
+SparseNode * SparseArray_insertmerge(SparseNode *, int, int); // insert function for merging the two trees
 
 SparseNode * SparseArray_merge(SparseNode * array_1, SparseNode * array_2)
 {
+  SparseNode * tempcopy = SparseArray_copy(array_1);
+  if (array_2 == NULL)
+    {
+      return tempcopy;
+    }
+  tempcopy = SparseArray_realmerge(tempcopy, array_2);
+  return tempcopy;
+}
 
-  return NULL;
+SparseNode * SparseArray_realmerge (SparseNode * tempcopy, SparseNode * array_2)
+{
+  if (array_2 == NULL)
+    {
+      return NULL;
+    }
+  SparseArray_realmerge(tempcopy, array_2 -> left);
+  SparseArray_realmerge(tempcopy, array_2 -> right);
+  tempcopy = SparseArray_insertmerge(tempcopy, array_2 -> index, array_2 -> value);// recursively merge the trees
+  return tempcopy;
+}
 
+SparseNode * SparseArray_insertmerge (SparseNode * array, int index, int value )
+{
+  if (array == NULL)
+    {
+      return SparseNode_create(index, value);
+    }
+  if ((array -> index) == index)
+    {
+      array->value += value; // add the values
+      if (array-> value == 0)
+	{
+	  array = SparseArray_remove(array, index);
+	}
+      return array;
+    }
+  if ((array -> index) > index)
+    {
+      array -> left = SparseArray_insertmerge(array->left, index, value);
+      return array;
+    }
+  array->right = SparseArray_insertmerge(array->right, index, value);
+  return array;
 }
