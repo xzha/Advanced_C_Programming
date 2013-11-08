@@ -1,11 +1,11 @@
 #ifndef TREE_H
 #define TREE_H
 
-typedef struct leaf {
+/*typedef struct leaf {
     int value;
     struct leaf *left;
     struct leaf *right;
-} HuffNode;
+} HuffNode;*/
 
 void Huff_postOrderPrint(HuffNode *tree);
 
