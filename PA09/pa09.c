@@ -18,6 +18,7 @@ int main (int argc, char ** argv)
   if (fh == NULL)
     {
       printf("ERROR\n");
+      printf("INVALID INPUT FILE\n");
       return EXIT_FAILURE;
     }
 
@@ -36,12 +37,28 @@ int main (int argc, char ** argv)
     {
       //do byte
       root = readbyByte(fh);
-      Huff_postOrderPrint(root);
     }
   else
     {
       //do bit
+      root = readbyBit(fh);
     }
+
+  //PRINT TREE
+  FILE * fptr;
+  fptr = fopen(argv[2], "w");
+  if (fptr == NULL)
+    {
+      printf("ERROR\n");
+      printf("INVALID OUTPUT FILE\n");
+      return EXIT_FAILURE;
+    }
+  printtoFile(fptr, root);
+
+  //FREE
+  HuffNode_destroy(root);
+  fclose(fh);
+  fclose(fptr);
 
   return EXIT_SUCCESS;
 

@@ -116,35 +116,127 @@ Stack * Stack_pop(Stack * st)
   return nextone;
 }
 
-/*******************************************************
- * Print the huffman tree
+/********************************************************
+ * Method: read the file bit by bit
+ * 
+ * Input Arguments: the file handle of the file
+ * Return: the root of the constructed tree
  *
- * Input argument: the root of the tree
+ *******************************************************/
+HuffNode * readbyBit(FILE * fptr)
+{
+  int loc = 0;
+  int done = 0; // tree not done
+  Stack * st = NULL;
+
+  while (! feof (fptr))
+    {
+      unsigned char firstbyte = fgetc(fptr);
+      unsigned char mask[] =  {0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
+        
+      while (!done)
+        {
+	  loc %= 8;
+	  while ((firstbyte & mask[loc]) != 0)
+            {
+	      unsigned char secondbyte = fgetc(fptr);
+	      unsigned char joinedbyte;
+	      unsigned char x = firstbyte;
+	      unsigned char y = secondbyte;
+	      if (loc == 7)
+                {
+		  unsigned char nextbyte = fgetc(fptr);
+		  joinedbyte = secondbyte;
+		  loc = 0;
+		  firstbyte = nextbyte;
+                }
+	      else
+                {
+		  x <<= (loc + 1);
+		  y >>= (7 - loc);
+		  joinedbyte = x + y;
+		  loc ++;
+		  firstbyte = secondbyte;
+                }
+	      HuffNode * hn = HuffNode_create(joinedbyte);
+	      st = Stack_push(st, hn);
+            }
+    
+        
+	  if ((firstbyte & mask[loc]) == 0)
+            {
+	      HuffNode * huff = st -> node;
+	      st = Stack_pop(st);
+	      if (st == NULL)
+		{
+		  done = 1;
+		  return huff;
+		}
+	      else
+		{
+		  HuffNode * node = st -> node;
+		  st = Stack_pop(st);
+		  HuffNode * more = malloc(sizeof(HuffNode));
+		  more -> value = ' ';
+		  more -> right = huff;
+		  more -> left = node;
+		  st = Stack_push(st, more);
+		}
+	      if (loc == 7)
+                {
+		  unsigned char consecbyte = fgetc(fptr);
+		  firstbyte = consecbyte;
+		  loc = 0;
+                }
+	      else
+                {
+		  loc ++;
+                }
+            }
+        }
+    }
+      return NULL;
+}
+
+/********************************************************
+ * Method: print the tree to file
+ * 
+ * Input Arguments: the file handle of the file and root
  * Return: NULL
  *
- ******************************************************/
-/* DO NOT MODIFY THIS FUNCTION!!! */
-void Huff_postOrderPrint(HuffNode *tree)
+ *******************************************************/
+void printtoFile(FILE * fh, HuffNode * root)
 {
-    // Base case: empty subtree
-    if (tree == NULL) {
-		return;
+  if (root == NULL)
+    {
+      return;
     }
-
-    // Recursive case: post-order traversal
-
-    // Visit left
-    printf("Left\n");
-    Huff_postOrderPrint(tree->left);
-	printf("Back\n");
-    // Visit right
-    printf("Right\n");
-    Huff_postOrderPrint(tree->right);
-	printf("Back\n");
-    // Visit node itself (only if leaf)
-    if (tree->left == NULL && tree->right == NULL) {
-		printf("Leaf: %c\n", tree->value);
+  fprintf(fh, "Left\n");
+  printtoFile(fh, root -> left);
+  fprintf(fh, "Back\n");
+  fprintf(fh, "Right\n");
+  printtoFile(fh, root -> right);
+  fprintf(fh, "Back\n");
+  if (root -> left == NULL && root -> right == NULL)
+    {
+      fprintf(fh, "Leaf: %c\n", root->value);
     }
-    
+}
 
+/********************************************************
+ * Method: destroy the tree
+ * 
+ * Input Arguments: the root of the tree
+ * Return: NULL
+ *
+ *******************************************************/
+void HuffNode_destroy(HuffNode * root)
+{
+  if (root == NULL)
+    {
+      return;
+    }
+  HuffNode_destroy(root -> left);
+  HuffNode_destroy(root -> right);
+  free (root);
 }
