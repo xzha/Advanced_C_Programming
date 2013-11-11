@@ -13,16 +13,12 @@ HuffNode * readbyByte (FILE * fh)
 {
   int read;
   int readmore;
-  int newline = 2;
+  int done = 0;
   Stack * st = NULL;
 
-  while (!feof(fh) && newline)
+  while (!feof(fh) && !done)
     {
       read = fgetc(fh);
-      if (read == '\n')
-	{
-	  newline -= 1;
-	}
       if (read == '1')
 	{
 	  readmore = fgetc(fh);
@@ -35,6 +31,7 @@ HuffNode * readbyByte (FILE * fh)
 	  st = Stack_pop(st);
 	  if (st == NULL)
 	    {
+	      done = 1;
 	      return huff;
 	    }
 	  else
