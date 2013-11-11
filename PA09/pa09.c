@@ -49,6 +49,8 @@ int main (int argc, char ** argv)
   fptr = fopen(argv[2], "w");
   if (fptr == NULL)
     {
+      HuffNode_destroy(root);
+      fclose(fh);
       printf("ERROR\n");
       printf("INVALID OUTPUT FILE\n");
       return EXIT_FAILURE;
