@@ -1,0 +1,89 @@
+==4595== Memcheck, a memory error detector
+==4595== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==4595== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==4595== Command: ./pa08 inputs/input1 outputs/output1
+==4595== Parent PID: 4594
+==4595== 
+--4595-- 
+--4595-- Valgrind options:
+--4595--    --suppressions=/usr/lib/valgrind/debian-libc6-dbg.supp
+--4595--    --tool=memcheck
+--4595--    --leak-check=full
+--4595--    --verbose
+--4595--    --log-file=outputs/memoutput1
+--4595-- Contents of /proc/version:
+--4595--   Linux version 3.11.0-12-generic (buildd@allspice) (gcc version 4.8.1 (Ubuntu/Linaro 4.8.1-10ubuntu7) ) #19-Ubuntu SMP Wed Oct 9 16:20:46 UTC 2013
+--4595-- Arch and hwcaps: AMD64, amd64-sse3-cx16-avx
+--4595-- Page sizes: currently 4096, max supported 4096
+--4595-- Valgrind library directory: /usr/lib/valgrind
+--4595-- Reading syms from /home/yaoyao/ECE264/solutions/PA08/pa08
+--4595-- Reading syms from /lib/x86_64-linux-gnu/ld-2.17.so
+--4595--   Considering /lib/x86_64-linux-gnu/ld-2.17.so ..
+--4595--   .. CRC mismatch (computed 51e60a7a wanted 521e3c74)
+--4595--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--4595--   .. CRC is valid
+--4595--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.17.so ..
+--4595--   .. CRC is valid
+--4595-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--4595--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--4595--   .. CRC mismatch (computed c436d3d9 wanted 99aa3883)
+--4595--    object doesn't have a symbol table
+--4595--    object doesn't have a dynamic symbol table
+--4595-- Scheduler: using generic scheduler lock implementation.
+--4595-- Reading suppressions file: /usr/lib/valgrind/debian-libc6-dbg.supp
+--4595-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==4595== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-4595-by-yaoyao-on-???
+==4595== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-4595-by-yaoyao-on-???
+==4595== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-4595-by-yaoyao-on-???
+==4595== 
+==4595== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==4595== don't want to do, unless you know exactly what you're doing,
+==4595== or are doing some strange experiment):
+==4595==   /usr/lib/valgrind/../../bin/vgdb --pid=4595 ...command...
+==4595== 
+==4595== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==4595==   /path/to/gdb ./pa08
+==4595== and then give GDB the following command
+==4595==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=4595
+==4595== --pid is optional if only one valgrind process is running
+==4595== 
+--4595-- REDIR: 0x4018f40 (strlen) redirected to 0x3806e491 (???)
+--4595-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--4595--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--4595--   .. CRC mismatch (computed 826470ab wanted a8b7e9f3)
+--4595--    object doesn't have a symbol table
+--4595-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--4595--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--4595--   .. CRC mismatch (computed d4fd7975 wanted b90a895a)
+--4595--    object doesn't have a symbol table
+--4595-- REDIR: 0x4018db0 (index) redirected to 0x4c2d480 (index)
+--4595-- REDIR: 0x4018e30 (strcmp) redirected to 0x4c2e560 (strcmp)
+--4595-- Reading syms from /lib/x86_64-linux-gnu/libc-2.17.so
+--4595--   Considering /lib/x86_64-linux-gnu/libc-2.17.so ..
+--4595--   .. CRC mismatch (computed 2c8ee98b wanted da4a7364)
+--4595--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--4595--   .. CRC is valid
+--4595--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.17.so ..
+--4595--   .. CRC is valid
+--4595-- REDIR: 0x4ec1980 (strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--4595-- REDIR: 0x4ebdd10 (strnlen) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--4595-- REDIR: 0x4ec3c50 (strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--4595-- REDIR: 0x4ec0790 (memset) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--4595-- REDIR: 0x4ec0740 (memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--4595-- REDIR: 0x4ebf700 (__GI_strrchr) redirected to 0x4c2d2a0 (__GI_strrchr)
+--4595-- REDIR: 0x4eb7470 (malloc) redirected to 0x4c2a270 (malloc)
+--4595-- REDIR: 0x4ec7b20 (strchrnul) redirected to 0x4c300f0 (strchrnul)
+--4595-- REDIR: 0x4eb7900 (free) redirected to 0x4c2b5a0 (free)
+--4595-- REDIR: 0x4ebdc30 (__GI_strlen) redirected to 0x4c2d830 (__GI_strlen)
+==4595== 
+==4595== HEAP SUMMARY:
+==4595==     in use at exit: 0 bytes in 0 blocks
+==4595==   total heap usage: 33 allocs, 33 frees, 1,880 bytes allocated
+==4595== 
+==4595== All heap blocks were freed -- no leaks are possible
+==4595== 
+==4595== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+--4595-- 
+--4595-- used_suppression:      2 dl-hack3-cond-1
+==4595== 
+==4595== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
