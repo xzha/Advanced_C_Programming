@@ -36,7 +36,6 @@ int main(int argc, char * * argv)
 
  */
 
-
 /** 
  * Return TRUE iff 'state' is a valid puzzle state.
  *
@@ -50,11 +49,36 @@ int main(int argc, char * * argv)
  * (2) Sort the characters in your buffer. (Use qsort.)
  * (3) Check that buffer is equal to "-123456789ABCDEF"
  */
+
+ int compare (const void *, const void *);
+
+
 int isValidState(const char * state)
 {
-    return 0;
+  int len = strlen(state);
+  if (len == 0 || len != 16)
+    {
+      return FALSE;
+    }
+  char * copy = strdup(state);
+  qsort(copy, len, sizeof(char), compare);
+  if (strcmp(copy, "-123456789ABCDEF") == 0)
+    {
+      printPuzzle(copy);
+      free(copy);
+      return TRUE;
+    }
+  free (copy);
+    return FALSE;
 }
 
+int compare(const void * p1, const void * p2)
+{
+  char * point1 = (char*) p1;
+  char * point2 = (char*) p2;
+
+  return * point1 - *point2;
+}
 /** 
  * Return TRUE iff all characters in 'moves' are in "RLUD"
  *
@@ -63,7 +87,30 @@ int isValidState(const char * state)
  */ 
 int isValidMoveList(const char * moves)
 {
-    return 0;
+  int i = 0;
+  int len = strlen(moves);
+
+  for (i = 0; i < len; i ++)
+    {
+      if(moves[i] == 'R')
+	{
+	}
+      else if(moves[i] == 'L')
+	{
+	}
+      else if(moves[i] == 'U')
+	{
+	}
+      else if(moves[i] == 'D')
+	{
+	}
+      else
+	{
+	  return FALSE;
+	}
+    }
+  
+    return TRUE;
 }
 
 /**
@@ -134,7 +181,18 @@ void processMoveList(char * state, const char * movelist)
  */
 MoveTree * MoveTree_create(const char * state, const char * moves)
 {
-    return NULL;
+  MoveTree * mt = malloc(sizeof(MoveTree));
+
+  int lenstate = strlen(state) + 1;
+  int lenmoves = strlen(moves) + 1;
+  
+  mt -> state = malloc(lenstate * sizeof(char));
+  strcpy(mt -> state, state);
+  mt -> moves = malloc(lenmoves * sizeof(char));
+  strcpy(mt -> moves, moves);
+  mt -> left = NULL;
+  mt -> right = NULL;
+    return mt;
 }
 
 /**
@@ -142,7 +200,15 @@ MoveTree * MoveTree_create(const char * state, const char * moves)
  */
 void MoveTree_destroy(MoveTree * node)
 {
-    
+  if (node == NULL)
+    {
+      return;
+    }
+  MoveTree_destroy(node -> left);
+  MoveTree_destroy(node -> right);
+  free (node -> state);
+  free (node -> moves);
+  free (node);
 }
 
 /**
@@ -163,7 +229,7 @@ MoveTree * MoveTree_insert(MoveTree * node, const char * state,
  */
 MoveTree * MoveTree_find(MoveTree * node, const char * state)
 {
-  
+  return NULL;
 }
 
 /**
