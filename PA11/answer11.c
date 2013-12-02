@@ -282,8 +282,22 @@ MoveTree * MoveTree_insert(MoveTree * node, const char * state,
     {
       return MoveTree_create(state, moves);
     }
-  
-    return NULL;
+  if (strcmp(state, node -> state) < 0)
+    {
+      node -> left = MoveTree_insert(node -> left, state, moves);
+    }
+  else if (strcmp(state, node -> state) > 0)
+    {
+      node -> right = MoveTree_insert(node -> right, state, moves);
+    }
+  else
+    {
+      if(strlen(moves) < strlen(node -> moves))
+	{
+	  strcpy(node->moves, moves);
+	}
+    }
+    return node;
 }
 
 /**
@@ -292,7 +306,19 @@ MoveTree * MoveTree_insert(MoveTree * node, const char * state,
  */
 MoveTree * MoveTree_find(MoveTree * node, const char * state)
 {
-  return NULL;
+  if (node == NULL)
+    {
+      return NULL;
+    }
+  if (strcmp(state, node -> state) < 0)
+    {
+      return MoveTree_find(node -> left, state);
+    }
+  else if (strcmp(state, node -> state) > 0)
+    {
+      return MoveTree_find(node -> right, state);
+    }
+  return node;
 }
 
 /**
@@ -362,21 +388,38 @@ void generateAllHelper(MoveTree * root, int n_moves, const char * state, char * 
     {
       return;
     }
-  int i = 0;
-  char possible_moves[4] = {'U', 'D', 'L', 'R'};
 
-  for (i = 0; i < n_moves; i ++)
+  int i = 0;
+  char possible_moves[] = {'U', 'D', 'L', 'R'};
+
+  for (i = 0; i < 4; i ++)
     {
       char * dup_state = malloc(sizeof(char) * (strlen(state) + 1));
       strcpy(dup_state, state);
-      if(move(state, possible_moves[i]))
+      if(move(dup_state, possible_moves[i]))
 	{
+	  movelist[ind] = possible_moves[i];
+	  movelist[ind + 1] = '\0';
+	  MoveTree_insert(root, dup_state, movelist);
+	  generateAllHelper(root, n_moves, dup_state, movelist, ind + 1);
+	}
+      free(dup_state);
+    }
 	  
 }
 
+
 MoveTree * generateAll(char * state, int n_moves)
 { 
-    return NULL;
+  char * movelist = malloc(sizeof(char) * n_moves + 1);
+  movelist[n_moves] = '\0';
+  char * moves = malloc(sizeof(char) * 1);
+  moves[0] = '\0';
+  MoveTree * root = MoveTree_create(state, moves);
+  generateAllHelper(root, n_moves, state, movelist, 0);
+  free (movelist);
+  free (moves);
+    return root;
 }
 
 /**
@@ -388,6 +431,17 @@ MoveTree * generateAll(char * state, int n_moves)
  */
 char * solve(char * state)
 {
+  MoveTree * root = NULL;
+  root = generateAll(state, MAX_SEARCH_DEPTH);
+  MoveTree * node = NULL;
+  node = MoveTree_find (root, FINAL_STATE);
+  if (node != NULL)
+    {
+      char * moves = malloc(sizeof(char) * (strlen(node -> moves) + 1));
+      strcpy(moves, node->moves);	      
+      MoveTree_destroy(root);
+      return moves;
+    }
     return NULL;
 }
 
