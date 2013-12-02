@@ -60,11 +60,16 @@ int isValidState(const char * state)
     {
       return FALSE;
     }
-  char * copy = strdup(state);
+
+  char * copy = malloc(sizeof(char) * (strlen(state) + 1));
+  if (copy == NULL)
+    {
+      return FALSE;
+    }
+  strcpy(copy, state);
   qsort(copy, len, sizeof(char), compare);
   if (strcmp(copy, "-123456789ABCDEF") == 0)
     {
-      printPuzzle(copy);
       free(copy);
       return TRUE;
     }
@@ -154,7 +159,48 @@ void printPuzzle(const char * state)
  * (5) Swap the characters at 'position' and 'target_position'
  */
 int move(char * state, char m)
-{    
+{
+  int i = 0;
+  int len = 0;
+  int row = 0;
+  int col = 0;
+  int pos;
+  len = strlen(state);
+  
+  for (i = 0; i < len; i ++)
+    {
+      if (state[i] == '-')
+	{
+	  pos = i;
+	  row = pos / SIDELENGTH;
+	  col = pos % SIDELENGTH;
+	}
+    }
+
+  switch (m)
+    {
+    case 'U' : row = row - 1;
+      break;
+    case 'D' : row = row + 1;
+      break;
+    case 'L' : col = col - 1;
+      break;
+    case 'R' : col = col + 1;
+      break;
+    default:
+      return FALSE;
+    }
+
+  if (row < 0 || row >= SIDELENGTH || col < 0 || col >= SIDELENGTH)
+    {
+      return FALSE;
+    }
+  
+  int target = (row * SIDELENGTH) + col;
+
+  state[pos] = state[target];
+  state[target] = '-';
+
     return TRUE;
 }
 
@@ -173,7 +219,19 @@ int move(char * state, char m)
  */
 void processMoveList(char * state, const char * movelist)
 {
+  int i = 0;
+  int len = strlen(movelist);
 
+  for (i = 0; i < len; i ++)
+    {
+      if (!move(state, movelist[i]))
+	{
+	  printf ("I\n");
+	  return;
+	}
+    }
+
+  printf ("%s\n", state);
 }
 
 /**
@@ -220,6 +278,11 @@ void MoveTree_destroy(MoveTree * node)
 MoveTree * MoveTree_insert(MoveTree * node, const char * state,
 			   const char * moves)
 {
+  if (node == NULL)
+    {
+      return MoveTree_create(state, moves);
+    }
+  
     return NULL;
 }
 
@@ -293,6 +356,24 @@ void MoveTree_print(MoveTree * node)
  * This is the most complex function to write... make sure you break
  * it down, and TEST EACH PART.
  */
+void generateAllHelper(MoveTree * root, int n_moves, const char * state, char * movelist, int ind)
+{
+  if (ind == n_moves)
+    {
+      return;
+    }
+  int i = 0;
+  char possible_moves[4] = {'U', 'D', 'L', 'R'};
+
+  for (i = 0; i < n_moves; i ++)
+    {
+      char * dup_state = malloc(sizeof(char) * (strlen(state) + 1));
+      strcpy(dup_state, state);
+      if(move(state, possible_moves[i]))
+	{
+	  
+}
+
 MoveTree * generateAll(char * state, int n_moves)
 { 
     return NULL;
