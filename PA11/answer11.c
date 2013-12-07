@@ -50,13 +50,14 @@ int main(int argc, char * * argv)
  * (3) Check that buffer is equal to "-123456789ABCDEF"
  */
 
- int compare (const void *, const void *);
+//Comparison Function
+int compare (const void *, const void *);
 
 
 int isValidState(const char * state)
 {
   int len = strlen(state);
-  if (len == 0 || len != 16)
+  if (len != 16)
     {
       return FALSE;
     }
@@ -167,6 +168,7 @@ int move(char * state, char m)
   int pos;
   len = strlen(state);
   
+  // Find '-'
   for (i = 0; i < len; i ++)
     {
       if (state[i] == '-')
@@ -177,7 +179,8 @@ int move(char * state, char m)
 	}
     }
 
-  switch (m)
+  // Determine Moves
+  switch (m) 
     {
     case 'U' : row = row - 1;
       break;
@@ -191,13 +194,14 @@ int move(char * state, char m)
       return FALSE;
     }
 
+  // Check  Boundaries
   if (row < 0 || row >= SIDELENGTH || col < 0 || col >= SIDELENGTH)
     {
       return FALSE;
     }
   
+  // Swap
   int target = (row * SIDELENGTH) + col;
-
   state[pos] = state[target];
   state[target] = '-';
 
@@ -282,7 +286,7 @@ MoveTree * MoveTree_insert(MoveTree * node, const char * state,
     {
       return MoveTree_create(state, moves);
     }
-  if (strcmp(state, node -> state) < 0)
+  if (strcmp(state, node -> state) < 0) // state is like index, and moves is like value 
     {
       node -> left = MoveTree_insert(node -> left, state, moves);
     }
@@ -384,23 +388,32 @@ void MoveTree_print(MoveTree * node)
  */
 void generateAllHelper(MoveTree * root, int n_moves, const char * state, char * movelist, int ind)
 {
+  // Base Case
   if (ind == n_moves)
     {
       return;
     }
 
+  // Generate possible moves
   int i = 0;
   char possible_moves[] = {'U', 'D', 'L', 'R'};
 
+  // Similar to Recursion and Partition Function
   for (i = 0; i < 4; i ++)
     {
+      // Duplicate the state
       char * dup_state = malloc(sizeof(char) * (strlen(state) + 1));
       strcpy(dup_state, state);
+      
+      // Apply move
       if(move(dup_state, possible_moves[i]))
 	{
+	  // Update movelist
 	  movelist[ind] = possible_moves[i];
 	  movelist[ind + 1] = '\0';
 	  MoveTree_insert(root, dup_state, movelist);
+
+	  // Recursively call itself
 	  generateAllHelper(root, n_moves, dup_state, movelist, ind + 1);
 	}
       free(dup_state);
@@ -431,10 +444,15 @@ MoveTree * generateAll(char * state, int n_moves)
  */
 char * solve(char * state)
 {
+  // Create root
   MoveTree * root = NULL;
   root = generateAll(state, MAX_SEARCH_DEPTH);
+
+  // Create node
   MoveTree * node = NULL;
   node = MoveTree_find (root, FINAL_STATE);
+
+  // Check if puzzle is solved
   if (node != NULL)
     {
       char * moves = malloc(sizeof(char) * (strlen(node -> moves) + 1));
@@ -442,6 +460,6 @@ char * solve(char * state)
       MoveTree_destroy(root);
       return moves;
     }
+  MoveTree_destroy(root);
     return NULL;
 }
-
