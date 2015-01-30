@@ -1,2 +1,2 @@
-#Advanced C Programming
-Assignments: made in C
+#Advanced C Programming Assignments 
+Made with C
